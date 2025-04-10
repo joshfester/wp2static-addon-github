@@ -16,7 +16,7 @@ jobs:
       run: |
         mkdir -p wp2static-addon-github
         rsync -r --exclude=".git" --exclude=".github" --exclude="wp2static-addon-github" . wp2static-addon-github/
-        zip -r wp2static-addon-github.zip wp2static-addon-github
+        zip --quiet -r -9 wp2static-addon-github.zip wp2static-addon-github
         
     - name: Upload build artifact
       uses: actions/upload-artifact@v4
