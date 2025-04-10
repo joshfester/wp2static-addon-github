@@ -31,5 +31,5 @@ jobs:
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
-        files: wp2static.zip
+        files: wp2static-addon-github.zip
         generate_release_notes: true
