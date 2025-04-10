@@ -1,0 +1,36 @@
+name: Build Plugin Zip File
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.4'
+        tools: composer:v2
+
+    - name: Build
+      run: |
+        composer install --no-dev --optimize-autoloader
+        
+    - name: Create build archive
+      run: |
+        mkdir -p wp2static-addon-github
+        rsync -r --exclude=".git" --exclude=".github" --exclude="integration-tests" --exclude="tests" --exclude="nix" --exclude="tools" --exclude="wp2static-addon-github" . wp2static-addon-github/
+        zip -r wp2static-addon-github.zip wp2static-addon-github
+        
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: wp2static-addon-github
+        path: wp2static-addon-github.zip
+        retention-days: 90
