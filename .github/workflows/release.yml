@@ -26,6 +26,8 @@ jobs:
           --include="/views/**" \
           --exclude="*" \
           ./ wp2static-addon-github/
+        find wp2static-addon-github -type d -exec chmod 755 {} \;
+        find wp2static-addon-github -type f -exec chmod 644 {} \;
         zip --quiet -r -9 wp2static-addon-github.zip wp2static-addon-github
         
     - name: Release
