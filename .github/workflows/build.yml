@@ -15,7 +15,16 @@ jobs:
     - name: Create build archive
       run: |
         mkdir -p wp2static-addon-github
-        rsync -r --exclude=".git" --exclude=".github" --exclude="wp2static-addon-github" . wp2static-addon-github/
+        rsync -r \
+          --include="/*.php" \
+          --include="/admin/" \
+          --include="/admin/**" \
+          --include="/includes/" \
+          --include="/includes/**" \
+          --include="/views/" \
+          --include="/views/**" \
+          --exclude="*" \
+          ./ wp2static-addon-github/
         zip --quiet -r -9 wp2static-addon-github.zip wp2static-addon-github
         
     - name: Upload build artifact
