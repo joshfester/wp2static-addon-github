@@ -2,7 +2,8 @@ name: Build Plugin Zip File
 
 on:
   push:
-    branches: [ main ]
+    tags:
+      - "v*.*.*"
 
 jobs:
   build:
@@ -27,9 +28,8 @@ jobs:
           ./ wp2static-addon-github/
         zip --quiet -r -9 wp2static-addon-github.zip wp2static-addon-github
         
-    - name: Upload build artifact
-      uses: actions/upload-artifact@v4
+    - name: Release
+      uses: softprops/action-gh-release@v1
       with:
-        name: wp2static-addon-github
-        path: wp2static-addon-github.zip
-        retention-days: 90
+        files: wp2static.zip
+        generate_release_notes: true
